@@ -36,7 +36,7 @@ void NetPool::removeFromPool(int sockid){
 
 void NetPool::printPool() {
 
-	cout << "========================Pool entries ================================" << endl;
+	cout << "========================Pool entries "<< m_connections.size() << " ============================" << endl;
 	for (auto element : m_connections)
 		cout << element.first << endl;
 	cout << "=====================================================================" << endl;

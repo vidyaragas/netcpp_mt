@@ -17,6 +17,8 @@ class ThrMessageQueue
 	private:
 		std::thread m_thread;
 		std::mutex m_mutex;
+		std::mutex m_singleLock;
+		std::condition_variable m_condVariable;
         	deque<ThrMessage*> m_queue;
 		NetInterface *m_interface;
 

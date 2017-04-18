@@ -26,13 +26,18 @@ void ThrMessageQueue::startThread()
 			processMessage(tm);
 			removeFromQueue();
 			delete tm;	
+		} else {
+			std::unique_lock<std::mutex> oneLock(m_singleLock);
+			m_condVariable.wait(oneLock);
 		}
 	}
 }
 void ThrMessageQueue::addToQueue(ThrMessage *tm)
 {
 	m_mutex.lock();
+	std::unique_lock<std::mutex> oneLock(m_singleLock);
 	m_queue.push_back(tm); 
+	m_condVariable.notify_all();	
 	m_mutex.unlock();
 	
 }
